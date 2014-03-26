@@ -1,5 +1,5 @@
 ---
-- hosts: 192.168.240.50
+- hosts: ${target}
   user: root
 
   tasks:
