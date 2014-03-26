@@ -1,0 +1,42 @@
+---
+- hosts: ${target}
+  user: root
+  vars_files:
+    - vars.yml
+  gather_facts: false
+  
+
+  tasks:
+  - name: remove existing directory
+    shell: rm -rf /opt/TopPatch
+
+  - name: Pull sources from the repository.
+    git: repo=${project_repo} dest=${project_root}/     
+  
+  - name: Create group.
+    group: name=${project_user} state=present
+  
+  - name: Create user.
+    user: home=/home/${project_user} name=${project_user} group=${project_user} shell=/bin/bash state=present
+
+  - name: Update the vFense Deploy Directory.
+    file: group=${project_user} owner=${project_user} mode=775 state=directory path=${project_root}
+
+  - name: Install required system packages.
+    apt: pkg=${item} state=installed update-cache=yes
+    with_items: ${system_packages}
+
+  - name: Install required Python packages.
+    easy_install: name=${item}
+    with_items: ${python_packages}
+
+  - name: Change permissions.
+    shell: chown -R ${project_user}:${project_user} ${project_root}
+
+  - name: latest python libraries
+    shell: pip install --upgrade ${upgrade_libs}
+
+  - name: symlink creation
+    action: file src=/opt/TopPatch/tp/src dest=/usr/local/lib/python2.7/dist-packages/vFense state=link
+
+

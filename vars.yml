@@ -1,0 +1,34 @@
+project_name: vFense
+project_root: /opt/TopPatch/
+project_repo: https://github.com/toppatch/vFense.git
+project_user: toppatch
+require_file: /etc/ansible/vfenseDep/requirements.txt
+system_packages:
+  - build-essential
+  - git
+  - nginx-extras
+  - redis-server
+  - openssh-server
+  - patch
+  - python-setuptools
+  
+python_packages:
+  - pip
+  - virtualenv
+  - lxml
+  - pycurl
+  - redis
+  - pyopenssl
+  - tornado
+  - beautifulsoup
+  - roman
+  - bcrypt
+  - ipaddr
+  - pytz
+  - urlgrabber
+  - netifaces
+  - jsonpickle
+  - simplejson 
+
+upgrade_libs:
+  - rq rethinkdb requests apscheduler tornado-redis xlrd 

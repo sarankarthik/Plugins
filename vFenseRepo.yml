@@ -1,0 +1,19 @@
+---
+- hosts: 192.168.240.50
+  user: root
+
+  tasks:
+     - name: Installing the python libraries 
+       apt: pkg=python-software-properties state=present
+     
+     - name: Installing the python libraries 
+       apt: pkg=software-properties-common state=present
+
+     - name: Adding Repo for rethinkDB 
+       apt_repository: repo='ppa:rethinkdb/ppa'
+
+     - name: Adding Repo for vFense
+       apt_repository: repo='ppa:wev/vfense'
+     
+     - name: Installaing the vFense server
+       apt: pkg=vfense-server state=present update_cache=yes
