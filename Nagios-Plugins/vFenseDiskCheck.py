@@ -63,8 +63,13 @@ def checkValue():
     if authenticated.ok:
         print 'authenticated'
         data = session.get( url + api_version + api_call, verify=False, headers=headers, cookies=jar)
-        if data.ok:
+        statusCode= data.status_code                
+        if (statusCode == 200):
             kk =json.loads(data.content)
+        else:
+            print "There is a error in the API CALL"
+            print "API Call Status Code is :" + str(statusCode)
+            sys.exit(0)
     testMe = []
     perCentVal = 0
     for key1,val1 in kk.items():
