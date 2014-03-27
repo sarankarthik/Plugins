@@ -59,8 +59,13 @@ def checkValue():
     authenticated = session.post( url + login_uri, data=json.dumps(creds), verify=False, headers=headers, cookies=jar)
     if authenticated.ok:
         data = session.get( url + api_version + api_call, verify=False, headers=headers, cookies=jar)
-        if data.ok:
+        statusCode= data.status_code                
+        if (statusCode == 200):
             kk =json.loads(data.content)
+        else:
+            print "There is a error in the API CALL"
+            print "API Call Status Code is :" + str(statusCode)
+            sys.exit(0)
     testMe = []
     for key1,val1 in kk.items():
         if(key1=="data"):
